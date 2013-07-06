@@ -1,12 +1,18 @@
-//  usage: node ./readShakespeare.js example.txt
+//  usage: node ./read-shakespeare.js example.txt
+
 (function() {
+
 "use strict";
+
 var LineByLineReader = require('line-by-line');
 var fs = require('fs');
+var HTTP = require("http");
+var querystring = require('querystring');
+
 var args = process.argv;
 var willRead = args[2];
 if (!willRead) {
-	console.log('Looks like you forgot to tell node what to read: node readShakespeare.js example.txt');
+	console.log('Looks like you forgot to tell node what to read: node read-shakespeare.js example.txt');
 	process.exit();
 }
 var lr = new LineByLineReader(willRead);
@@ -17,7 +23,7 @@ var words = {};
 var start = +new Date;
 
 lr.on('error', function (err) {
-	// 'err' contains error object
+	console.log('there was an error: ' + err);
 });
 
 lr.on('line', function (line) {
@@ -52,21 +58,26 @@ lr.on('end', function () {
 	// All lines are read, file is closed now.
 	var end = +new Date;
 	var duration = end - start;
-	var response = {
+	var results = {
 		words: words,
+		wordsString: JSON.stringify(words),
 		duration: duration,
 		linesCount: linesCount,
 		wordCount: wordCount
 	};
-	console.log(response);
+	console.log(results);
 	var parsedWordsArray = sortObject(words);
+	// var resultsFile = fs.openSync('./lear-results.txt', 'w');
+
+	// fs.writeSync(resultsFile, parsedWordsArray);
 	console.log(parsedWordsArray);
 	console.log('number of lines parsed: ' + linesCount);
 	console.log('number of words used: ' + parsedWordsArray.length);
 	console.log('total word count: ' + wordCount);
 	console.log('parsing this took: ' + duration + 'ms');
-	var resultsFile = fs.openSync('./lear-results.txt', 'w');
-	fs.writeSync(resultsFile, parsedWordsArray);
+
+	sendPost(results);
+
 });
 // http://stackoverflow.com/questions/1069666/sorting-javascript-object-by-property-value
 // sorts object and returns it from least entries to most
@@ -94,6 +105,32 @@ function sortObject(obj) {
 	arr.sort(function(a, b) { return a.value - b.value; });
 	//arr.sort(function(a, b) { a.value.toLowerCase().localeCompare(b.value.toLowerCase()); }); //use this to sort as strings
 	return arr;
+}
+function sendPost(results) {
+// http://stackoverflow.com/questions/9768192/sending-data-through-post-request-from-a-node-js-server-to-a-node-js-server
+var data = querystring.stringify(results);
+
+var options = {
+    // host: 'localhost:4567', // sinatra/thin
+    host: '127.0.0.1', // sinatra/shotgun
+    port: 9393,
+    path: '/save_results',
+    method: 'POST',
+    headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Content-Length': data.length
+    }
+};
+
+var req = HTTP.request(options, function(res) {
+    res.setEncoding('utf8');
+    res.on('data', function (chunk) {
+        console.log("body: " + chunk);
+    });
+});
+
+req.write(data);
+req.end();
 }
 
 })();
