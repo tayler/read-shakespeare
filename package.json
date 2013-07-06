@@ -9,10 +9,10 @@
   	"word",
   	"count"
   ],
-  "homepage": "https://github.com/RustyMarvin/line-by-line",
+  "homepage": "https://github.com/tayler/read-shakespeare",
   "repository": {
     "type": "git",
-    "url": "git@github.com:RustyMarvin/line-by-line.git"
+    "url": "git@github.com:tayler/read-shakespeare.git"
   },
   "main": "./read-shakespeare.js",
   "dependencies": {
