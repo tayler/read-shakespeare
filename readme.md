@@ -1,7 +1,8 @@
 # Read Shakespeare
 
 ### Usage:
-`node read-shakespeare.js lear.txt // replace lear.txt with the name of the file you want to parse (any plain-text file, including code files, will do)` 
+`node read-shakespeare.js lear.txt` 
+Replace lear.txt with the name of the file you want to parse (any plain-text file, including code files, will do) 
 
 ### Under the hood:
 read-shakespeare uses the [line-by-line package](https://github.com/RustyMarvin/line-by-line) by Markus von der Wehd to make it through a text file.
