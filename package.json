@@ -1,0 +1,31 @@
+{
+  "name": "read-shakespeare",
+  "author": "Tayler Summers",
+  "version": "0.1.1",
+  "description": "Reads plain-text files (even .js, etc.). Kindly informs you which words the file contains and how many instances of each word there are. It's called read-shakespeare because that's what I created it to do. But don't worry, it's not so snooty that it won't read OSC or Beowulf.",
+  "keywords": [
+  	"parse",
+  	"text",
+  	"word",
+  	"count"
+  ],
+  "homepage": "https://github.com/RustyMarvin/line-by-line",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:RustyMarvin/line-by-line.git"
+  },
+  "main": "./read-shakespeare.js",
+  "dependencies": {
+  	"line-by-line": "0.1.x"
+  },
+  "engines": {
+    "node": ">=0.8.7"
+  },
+  "licenses": [
+    {
+      "type": "MIT",
+    }
+  ],
+  "readme": "\n# Read Shakespeare\n\n\n## Installation: `npm install read-shakespeare\n## Usage: `node read-shakespeare.js nameoffile.txt`\n## Under the hood: read-shakespeare uses the line-by-line package to make it through a text file.\nIt splits each line into its words and cleans + parses from there.\nEach word is put into an object. The word is the key and the occurrance count is the value.\n## License:\n\nThe MIT License (MIT)\n\nCopyright � 2012 Tayler Summers\n",
+  "_id": "read-shakespeare@0.1.1",
+}
