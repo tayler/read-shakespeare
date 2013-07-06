@@ -1,7 +1,7 @@
 # Read Shakespeare
 
 ### Installation:
-`npm install read-shakespeare
+`npm install read-shakespeare`
 
 ### Usage:
 `node read-shakespeare.js lear.txt`
