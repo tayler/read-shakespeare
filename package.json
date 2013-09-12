@@ -23,9 +23,9 @@
   },
   "licenses": [
     {
-      "type": "MIT",
+      "type": "MIT"
     }
   ],
   "readme": "\n# Read Shakespeare\n\n\n## Installation: `npm install read-shakespeare\n## Usage: `node read-shakespeare.js nameoffile.txt`\n## Under the hood: read-shakespeare uses the line-by-line package to make it through a text file.\nIt splits each line into its words and cleans + parses from there.\nEach word is put into an object. The word is the key and the occurrance count is the value.\n## License:\n\nThe MIT License (MIT)\n\nCopyright � 2012 Tayler Summers\n",
-  "_id": "read-shakespeare@0.1.1",
+  "_id": "read-shakespeare@0.1.1"
 }
