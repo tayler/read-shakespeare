@@ -1,5 +1,12 @@
 .DS_Store
+*.sublime*
+
 index.html
 kjv.txt
 lear-results.txt
-package.json
+
+backend
+texts
+node_modules
+tests/test-shakespeare.js
+
