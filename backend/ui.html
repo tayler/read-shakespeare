@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Read Shakespeare</title>
+	<script src="js/jquery-1.9.1.min.js"></script>
+	<script src="js/handlebars-1.0.0.js"></script>
+</head>
+<body>
+	<h1>Submit New Text for Processing</h1>
+	<form>
+		<input class="text-name" type="text" placeholder="name of text to be read" />
+		<input class="text-path" type="text" placeholder="relative path to plain-text file" />
+		<input class="submit" type="submit-text" value="Submit Text" />
+	</form>
+	<h1>Retrieve Results from Server</h1>
+	<input class="text-to-retrieve" type="text" placeholder="name of the text to retrieve" />
+	<input class="submit-search" type="submit" value="Submit Search" />
+	<div class="word-list"></div>
+	<script id="wordCountTemplate" type="text/x-handlebars">
+		<h2>{{id}}</h2>
+		{{#each words}}
+			<div class="wordCount">
+				{{this.key}}: {{this.value}}
+			</div>
+		{{/each}}
+	</script>
+	<!-- http://stackoverflow.com/questions/11884960/how-to-get-index-in-handlebars-each-helper -->
+	<!-- could also try {{#each object}} {{@key}}: {{this}} {{/each}} -->
+	<script>
+		var $submitText = $('.submit-text'),
+			$submitSearch = $('.submit-search'),
+			$wordList = $('.word-list');
+
+		// Handlebars.registerHelper('wordAndCount', function(context, options) {
+		// 	var ret = '<div class="word">' + context[0] + '</div>';
+		// 		ret += '<div class="count">' + context[1] + '</div>';
+
+		// 	return ret;
+		// });
+
+		$submitText.on('click', function(evt) {
+			var $textName = $('.text-name'),
+				$textPath = $('.text-path'),
+				newTextName = $textName.val(),
+				newTextPath = $textPath.val();
+			evt.preventDefault();
+			// this needs to get the above values to read-shakespeare.js;
+			// read-shakespeare doesn't handle requests;
+			// I could make it launch it's own server, use it to handle the data,
+			// and send the results to api.js OR send this data to an
+			// api.js route, then send the data to read-shakespeare, then have
+			// read-shakespeare send the data back to api.js
+			// $.ajax({
+			// 	url: 'localhost:8001/'
+			// });
+
+		});
+		$submitSearch.on('click', function(evt) {
+			var $textToRetrieve = $('.text-to-retrieve'),
+				textName = $textToRetrieve.val();
+
+			evt.preventDefault();
+
+			// send request to an api.js route
+			$.ajax({
+				url: 'http://localhost:8001/texts/' + textName,
+				success: function(response) {
+					var words = [];
+					for (var prop in response) {
+						if (!response.hasOwnProperty(prop) || prop === '_id' || prop === '_rev' || prop.length === 0) {
+							continue;
+						}
+						// prop === the word
+						// response[prop] === the word count
+						
+						// using array so that I can run it through .sort() to sort by word count lowest to highest word count
+						words.push({
+							'key': prop,
+							'value': response[prop]
+						});
+					}
+					words.sort(function(a, b) { return a.value - b.value; });
+					var source = $("#wordCountTemplate").html();
+					var template = Handlebars.compile(source);
+					var html = template({words: words, id: response._id});
+					$wordList.html(html);
+				}
+			});
+		});
+	</script>
+</body>
+</html>
