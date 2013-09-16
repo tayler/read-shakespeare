@@ -5,7 +5,6 @@ index.html
 kjv.txt
 lear-results.txt
 
-backend
 texts
 node_modules
 tests/test-shakespeare.js
