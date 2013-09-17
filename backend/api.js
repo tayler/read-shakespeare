@@ -17,9 +17,9 @@ var router = bee.route({
 		bee.staticDir("./js/", {".js": "application/x-javascript"}),
 	"/texts/`text`": function(req, res, tokens, values) {
 		var text = "";
+        // couchDb endpoint to retrieve document: `/nameOfDb/nameOfDoc`
 		couchDb.path = '/texts/' + tokens.text;
 		couchDb.method = 'GET';
-		// default method is 'GET', so I'm not bothering to specify
 		var couchRequest = HTTP.get(couchDb, function(couchResponse) {
 			// console.log('STATUS: ' + res.statusCode);
 			// console.log('HEADERS: ' + JSON.stringify(couchResponse.headers));
@@ -65,7 +65,7 @@ var router = bee.route({
 			data += chunk;
 		});
 		req.on("end", function() {
-//			console.log("raw: " + data);
+			console.log("raw: " + data);
 
 			var json = JSON.parse(data);
 
