@@ -17,7 +17,7 @@ var router = bee.route({
 		bee.staticDir("./js/", {".js": "application/x-javascript"}),
 	"/texts/`text`": function(req, res, tokens, values) {
 		var text = "";
-        // couchDb endpoint to retrieve document: `/nameOfDb/nameOfDoc`
+		// couchDb endpoint to retrieve document: `/nameOfDb/nameOfDoc`
 		couchDb.path = '/texts/' + tokens.text;
 		couchDb.method = 'GET';
 		var couchRequest = HTTP.get(couchDb, function(couchResponse) {
@@ -69,7 +69,7 @@ var router = bee.route({
 
 			var json = JSON.parse(data);
 
-            couchDb.path = '/texts/' + json.text;
+			couchDb.path = '/texts/' + json.textName;
 			couchDb.method = 'PUT';
 			// send to couch
 			var couchRequest = HTTP.request(couchDb, function(response) {
@@ -89,17 +89,17 @@ var router = bee.route({
 		});
 // traverse object
 // function process(key,value) {
-//     console.log(key + " : "+value);
+//	 console.log(key + " : "+value);
 // }
 
 // function traverse(o,func) {
-//     for (var i in o) {
-//         func.apply(this,[i,o[i]]);
-//         if (typeof(o[i])=="object") {
-//             //going on step down in the object tree!!
-//             traverse(o[i],func);
-//         }
-//     }
+//	 for (var i in o) {
+//		 func.apply(this,[i,o[i]]);
+//		 if (typeof(o[i])=="object") {
+//			 //going on step down in the object tree!!
+//			 traverse(o[i],func);
+//		 }
+//	 }
 // }
 	}
 });

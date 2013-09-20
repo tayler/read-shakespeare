@@ -4,10 +4,10 @@
   "version": "0.1.1",
   "description": "Reads plain-text files (even .js, etc.). Kindly informs you which words the file contains and how many instances of each word there are. It's called read-shakespeare because that's what I created it to do. But don't worry, it's not so snooty that it won't read OSC or Beowulf.",
   "keywords": [
-  	"parse",
-  	"text",
-  	"word",
-  	"count"
+    "parse",
+    "text",
+    "word",
+    "count"
   ],
   "homepage": "https://github.com/tayler/read-shakespeare",
   "repository": {
@@ -16,7 +16,14 @@
   },
   "main": "./read-shakespeare.js",
   "dependencies": {
-  	"line-by-line": "0.1.x"
+    "line-by-line": "0.1.x"
+  },
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-jshint": "~0.6.3",
+    "grunt-contrib-nodeunit": "~0.2.0",
+    "grunt-contrib-uglify": "~0.2.2",
+    "q": "~0.9.7"
   },
   "engines": {
     "node": ">=0.8.7"
