@@ -9,7 +9,6 @@ exports["initial test"] = function(test) {
 
 	test.done();
 };
-
 // exports["reading files with fs"] = function(test) {
 // 	fs.readFile('test/texts/short-test.txt', 'utf8', function (err, data) {
 // 		if (err) {
@@ -25,10 +24,10 @@ exports["text cleaning"] = function(test) {
 	var rs = new RS();
 	test.strictEqual(typeof rs.cleanLine, 'function', 'rs.readText is a function');
 
-	var lineWithSpace = '   this line starts and ends with spaces. I hope it\'s gone later.    ';
+	var lineWithSpace = "   this line starts and ends with spaces. I hope it's gone later.    ";
 	var lineWithSpaceCleaned = rs.cleanLine(lineWithSpace);
 console.log(lineWithSpaceCleaned);
-	test.strictEqual(lineWithSpaceCleaned, 'this line starts with a space. I hope it\'s gone later.', 'the line was cleaned properly');
+	test.strictEqual(lineWithSpaceCleaned, "this line starts and ends with spaces. I hope it's gone later.", 'the line was cleaned properly');
 
 	var wordsToClean = [
 		' space',

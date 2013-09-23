@@ -50,24 +50,27 @@ var writeResults = function(results) {
 	var resultsFile = fs.openSync('./results/read-results' + new Date().getTime() + '.txt', 'w');
 	fs.writeSync(resultsFile, JSON.stringify(results));
 };
-
+var start = new Date().getTime();
 // read file with rs.readText(); words and lines are automatically cleaned;
-rs.readText('texts/short-test.txt')
-.then(function(textWords) {
-	// console.log(JSON.stringify(textWords));
+rs.readText('texts/ed-poems-complete-gutenberg.txt')
+.then(rs.parseWords)
+.then(function(wordCounts) {
+	var results = {
+		textName: 'ED',
+		wordsString: JSON.stringify(wordCounts)
+	};
 
-	// parse file with rs.parseWords();
-	rs.parseWords(textWords)
-	.then(function(wordCounts) {
-		var results = {
-			textName: 'short-test',
-			wordsString: JSON.stringify(wordCounts)
-		};
-		// send with sendResults()
-		sendResults(results);
+	var end = new Date().getTime();
 
-		console.log(wordCounts);
-	});
+	console.log('Reading and parsing that text took ' + (end - start) + 'ms');
+
+	// write results to file
+	// rs.writeResults(wordCounts);
+
+	// send with sendResults()
+	// sendResults(results);
+
+	// console.log(wordCounts);
 
 });
 

@@ -2,9 +2,6 @@
 *.sublime*
 
 index.html
-kjv.txt
-lear-results.txt
-read-results.txt
 
 texts
 node_modules

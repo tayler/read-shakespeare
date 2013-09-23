@@ -43,7 +43,7 @@ var ReadShakespeare = function() {
 	/**
 	 * Turns a plain-text file into an array of words, one array member for each word in the text
 	 * @param  {String} willRead  the location of the text to be read, relative to this file
-	 * @return {Array}           an array of the words that make up the text at `willRead`
+	 * @return {Promise (Array)}           an array of the words that make up the text at `willRead`
 	 */
 	this.readText = function(willRead) {
 		var fs = require('fs'),
@@ -100,7 +100,7 @@ var ReadShakespeare = function() {
 	/**
 	 * Creates an object that has one member for each unique word in `allTextWords`; the key of that member is the word and the value is the word's occurrence count
 	 * @param  {Array} allTextWords  words whose occurrences will be counted
-	 * @return {Object}              holds words from `allTextWords` and their occurrence count
+	 * @return {Promise (Object)}              holds words from `allTextWords` and their occurrence count
 	 */
 	this.parseWords = function(allTextWords) {
 		var deferred = q.defer();
@@ -108,10 +108,12 @@ var ReadShakespeare = function() {
 
 		for (i = 0; i < allWordsLen; i++) {
 			if (wordKeys.indexOf(allTextWords[i]) >= 0) {
+				// the word has already been seen
 				// increment the value at words.preparedWord
 				words[allTextWords[i]]++;
 			} else {
-				// add `preparedWord` to `words` and give it a value/count of 1
+				// it hasn't been seen yet
+				// add `preparedWord` to `words` and give it an initial value/count of 1
 				wordKeys.push(allTextWords[i]);
 				words[allTextWords[i]] = 1;
 			}
